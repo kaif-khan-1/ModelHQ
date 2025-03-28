@@ -1,0 +1,267 @@
+.Models{
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: auto;
+    min-height: 500vh;
+    display: flex;
+    flex-direction: column;
+}
+.Models-hero{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 30px;
+    padding-bottom: 6%;
+}
+.Models-hero h1{
+    font-size: 70px;
+    text-align: center;
+    line-height: 1.1;
+}
+.Models-hero h3{
+    text-align: center;
+    font-size: 22px;
+    width: 60%;
+    color: rgba(0, 0, 0, 0.61);
+    font-weight: 400;
+}
+.Models-hero span{
+    color: #007EA7;
+}
+.Multiple_models{
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    padding-top: 1%;
+}
+.search-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left; 
+    padding: 0 5%;
+    margin-top: 1rem;
+    gap: 20px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 65%;
+}
+
+.search-input {
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    height: 3rem;
+    padding-left: 3rem;
+    color: black;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.459);
+    border-radius: 15px;
+}
+
+.search-input::placeholder{
+    font-size: 18px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 2px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: black;
+    font-size: 16px;
+}
+
+.dropdowns {
+    display: flex;
+    gap: 20px;
+}
+
+.dropdown {
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    width: 10rem;
+    height: 3rem;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.459);
+    padding: 0 20px;
+    border-radius: 15px;
+}
+
+.clear-btn {
+    background-color: #FF3B30;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.clear-btn:hover {
+    background-color: #D32F2F;
+}
+.Trending-models{
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 7% 5%;
+    gap: 2rem;
+}
+.tm-heading{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    gap: 20px;
+    font-size: 15px;
+}
+.tm-heading h1{
+    font-weight: 600;
+}
+.chart-icon{
+    color: #007EA7;
+    font-size: 30px;
+}
+.Model-list{
+    width: 100%;
+    height: 60vh;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.Model-list li{
+    width: 31%;
+    height: auto;
+    border: 2px solid rgba(0, 0, 0, 0.247);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5% 2.5%;
+    gap: 10px;
+    position: relative;
+}
+.Model-heading{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.Model-heading h2{
+    font-weight: 400;
+    font-size: 19px;
+}
+.Model-accuracy{
+    width: 90px;
+    height: 35px;
+    display: flex;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f8fb;
+    gap: 10px;
+}
+.Model-subheading{
+    font-size: 17px;
+    color: rgba(0, 0, 0, 0.719);
+    margin-top: 5px;
+}
+.Model-tags{
+    width: 100%;
+    height: 15%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+}
+.Model-tags li{
+    width: 7.5rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.078);
+    border: none;
+    font-size: 15px;
+}
+.Model-list hr{
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.055);
+    border-radius: 15px;
+    border: none;
+    color: black;
+    margin-top: 5px;
+}
+.Model-list button{
+    width: 100%;
+    height: 50px;
+    background-color: #007EA7;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.7s ease-in-out;
+}
+.Model-list button:hover{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.Marketing{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.Marketing p{
+    background-color: #007EA7;
+    border: none;
+    border-radius: 15px;
+    width: 5.5rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.Featured-models{
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 2% 5%;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
