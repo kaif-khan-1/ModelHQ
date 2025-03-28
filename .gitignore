@@ -1,0 +1,15 @@
+# Ignore virtual environments and dependencies
+venv/
+node_modules/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore large ML models
+ModelHQ/backend/models/*.h5
