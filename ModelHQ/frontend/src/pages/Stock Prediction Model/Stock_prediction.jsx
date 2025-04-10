@@ -30,33 +30,33 @@ const Stock_prediction = () => {
             return;
         }
     
-        // Extract the stock symbol (first part before ' - ')
-        const stockSymbol = selectedStock.split(' - ')[0];
-    
+        setIsLoading(true);
+        
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/stock/predict/', {
+            const response = await fetch('http://localhost:8000/predict/stock', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ stock_symbol: stockSymbol }) // Send stock symbol
+                body: JSON.stringify({ 
+                    stock_symbol: "GOOG",  // Always use GOOG for prediction
+                    days: 10
+                })
             });
-    
+            
             const data = await response.json();
-            console.log("Backend Response:", data);  // Debugging
-    
-            if (data.error) {
-                alert(`Error: ${data.error}`);
-                setPredictions([]); // Reset predictions
-            } else if (data.status === 'success' && Array.isArray(data.predictions)) {
+            
+            if (data.status === 'success') {
                 setPredictions(data.predictions);
             } else {
-                alert("Unexpected response from server.");
-                setPredictions([]);
+                throw new Error(data.message || 'Prediction failed');
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('Failed to fetch predictions');
+            alert(`Error: ${error.message}`);
+            setPredictions([]);
+        } finally {
+            setIsLoading(false);
         }
     };
+    
     
 
     return (
@@ -79,12 +79,23 @@ const Stock_prediction = () => {
                 </select>
                 <button className="search-button" onClick={handleSearch}>Search</button>
                 <div className="predictions">
-                    <h2>Predicted Prices for GOOGL</h2>
-                    <ul>
-                        {predictions.map((price, index) => (
-                            <li key={index}>Day {index + 1}: ${price.toFixed(2)}</li>
-                        ))}
-                    </ul>
+                    <h2>Predicted Prices for {selectedStock || 'Selected Stock'}</h2>
+                    {predictions.length > 0 ? (
+                        <ul>
+                            {predictions.map((price, index) => (
+                                <li key={index}>
+                                    Day {index + 1}: ${price.toFixed(2)}
+                                    {index > 0 && (
+                                        <span className={price > predictions[index-1] ? 'up' : 'down'}>
+                                            {price > predictions[index-1] ? '↑' : '↓'}
+                                        </span>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No predictions yet. Select a stock and click Search.</p>
+                    )}
                 </div>
             </div>
 

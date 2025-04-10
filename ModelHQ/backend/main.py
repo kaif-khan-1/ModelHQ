@@ -5,6 +5,10 @@ import numpy as np
 import cv2
 from pydantic import BaseModel
 import uvicorn
+from datetime import datetime, timedelta
+import yfinance as yf
+from sklearn.preprocessing import MinMaxScaler
+import os
 
 app = FastAPI()
 
@@ -17,9 +21,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load Models
+# Load breast cancer model
 breast_cancer_model = tf.keras.models.load_model("./models/Breast_cancer_new.h5")
-stock_model = tf.keras.models.load_model("./models/GOOG.h5")
 
 # Define input schemas
 class StockInput(BaseModel):
@@ -54,12 +57,55 @@ async def predict_breast_cancer(file: UploadFile = File(...)):
 
 @app.post("/predict/stock")
 def predict_stock(data: StockInput):
-    mock_predictions = [100 + i*5 for i in range(data.days)]
-    return {
-        "model": "stock",
-        "stock": data.stock_symbol,
-        "predictions": mock_predictions
-    }
+    try:
+        # Use GOOG.h5 model regardless of selected stock (for demo purposes)
+        model_path = "./models/GOOG.h5"
+        
+        if not os.path.exists(model_path):
+            return {
+                "status": "error",
+                "message": "GOOG prediction model not found"
+            }
+        
+        model = tf.keras.models.load_model(model_path)
+        
+        # Get recent data for GOOG (since model was trained on GOOG data)
+        end_date = datetime.now().strftime('%Y-%m-%d')
+        start_date = (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d')
+        stock_data = yf.download("GOOG", start=start_date, end=end_date)
+        
+        if stock_data.empty or len(stock_data) < 100:
+            return {
+                "status": "error",
+                "message": "Insufficient historical data for GOOG"
+            }
+        
+        # Preprocess data
+        scaler = MinMaxScaler(feature_range=(0,1))
+        scaled_data = scaler.fit_transform(stock_data[['Close']])
+        last_100_days = scaled_data[-100:].reshape(1, 100, 1)
+        
+        # Generate predictions
+        predicted_prices = []
+        current_sequence = last_100_days.copy()
+        
+        for _ in range(data.days):
+            pred = model.predict(current_sequence, verbose=0)[0][0]
+            actual_price = float(scaler.inverse_transform([[pred]])[0][0])
+            predicted_prices.append(actual_price)
+            current_sequence = np.append(current_sequence[:,1:,:], [[[pred]]], axis=1)
+        
+        return {
+            "status": "success",
+            "stock": "GOOG",  # Always return GOOG as the predicted stock
+            "predictions": predicted_prices
+        }
+        
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

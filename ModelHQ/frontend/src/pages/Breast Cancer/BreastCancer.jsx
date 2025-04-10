@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import './BreastCancer.css';
-import { FaUpload, FaSpinner, FaDiagnoses, FaTimes } from 'react-icons/fa';
+import { FaUpload, FaSpinner, FaDiagnoses, FaTimes, FaAtlas } from 'react-icons/fa';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
+
 
 const BreastCancer = () => {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -55,8 +56,8 @@ const BreastCancer = () => {
     return (
         <div className='BreastCancerClassifier'>
             <div className="classifier-header">
-                <div className="logo">MedAI</div>
-                <FaDiagnoses className="diagnosis-icon" onClick={() => setIsSidebarOpen(true)} />
+                <div className="logo">ModelHQ</div>
+                <FaAtlas className="diagnosis-icon" onClick={() => setIsSidebarOpen(true)} />
             </div>
 
             <div className="classifier-search">

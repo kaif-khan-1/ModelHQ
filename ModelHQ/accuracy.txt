@@ -1,0 +1,2 @@
+Heart disease :- 98%
+Sales prices prediction :- 96%
