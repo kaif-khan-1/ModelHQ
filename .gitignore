@@ -13,3 +13,4 @@ __pycache__/
 
 # Ignore large ML models
 ModelHQ/backend/models/*.h5
+ModelHQ/backend/models
