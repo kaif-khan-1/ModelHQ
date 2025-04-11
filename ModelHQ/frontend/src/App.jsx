@@ -10,6 +10,8 @@ import Housing from './pages/Housing price prediction/hpp'
 import Heart_disease from './pages/Heart disease/Heart_disease'
 import Diabetes_prediction from './pages/Diabetes_prediction/diabetes_prediction'
 import BreastCancer from "./pages/Breast Cancer/BreastCancer";
+import SalesPrediction from './pages/sales prediction/salesPrediction';
+import CarPricePrediction from './pages/Car Price Prediction/CarPricePrediction'
 import Lenis from "@studio-freight/lenis";
 
 const App = () => {
@@ -46,6 +48,8 @@ const App = () => {
         <Route path='/heart' element={<Heart_disease/>} />
         <Route path='/diabetes' element={<Diabetes_prediction/>} />
         <Route path='/BreastCancer' element={<BreastCancer/>} />
+        <Route path='/sales_prediction' element={<SalesPrediction />} />
+        <Route path='/car_price_prediction' element={<CarPricePrediction />} />
       </Routes>
     </Router>
   );

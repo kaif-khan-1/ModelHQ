@@ -27,6 +27,12 @@ const Navbar = () => {
     if (location.pathname === '/BreastCancer') {
         return null;
     }
+    if (location.pathname === '/sales_prediction') {
+        return null;
+    }
+    if (location.pathname === '/car_price_prediction') {
+        return null;
+    }
 
     return (
         <div className='Navbar'>

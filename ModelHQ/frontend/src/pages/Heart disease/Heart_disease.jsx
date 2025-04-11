@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Heart_disease.css'; // Use the same CSS file
+import './Heart_disease.css';
 import { FaAtlas, FaTimes } from 'react-icons/fa';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -20,10 +20,11 @@ const HeartDiseasePrediction = () => {
         ca: '',
         thal: ''
     });
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('overview');
-    const [predictionResult, setPredictionResult] = useState(null);
     const [openSection, setOpenSection] = useState(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [predictionResult, setPredictionResult] = useState(null);
+
 
     const toggleSection = (section) => {
         setOpenSection(openSection === section ? null : section);
@@ -35,83 +36,116 @@ const HeartDiseasePrediction = () => {
     };
 
     const handleHeartDiseasePrediction = async () => {
-        const {
-            age,
-            sex,
-            cp,
-            trestbps,
-            chol,
-            fbs,
-            restecg,
-            thalach,
-            exang,
-            oldpeak,
-            slope,
-            ca,
-            thal
-        } = inputData;
-
-        if (
-            !age || !sex || !cp || !trestbps || !chol || !fbs || !restecg || !thalach || !exang || !oldpeak || !slope || !ca || !thal
-        ) {
-            alert('Please fill in all fields.');
-            return;
-        }
-
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/heart-disease/predict/', {
+            // Validate input data
+            const requiredFields = [
+                "age", "sex", "cp", "trestbps", "chol", "fbs",
+                "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal"
+            ];
+            for (const field of requiredFields) {
+                if (!inputData[field]) {
+                    setPredictionResult({ error: `Field "${field}" is required.` });
+                    return;
+                }
+            }
+    
+            const response = await fetch('http://localhost:8000/predict/heart_disease', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(inputData)
+                body: JSON.stringify({
+                    age: parseFloat(inputData.age),
+                    sex: parseInt(inputData.sex),
+                    cp: parseInt(inputData.cp),
+                    trestbps: parseFloat(inputData.trestbps),
+                    chol: parseFloat(inputData.chol),
+                    fbs: parseInt(inputData.fbs),
+                    restecg: parseInt(inputData.restecg),
+                    thalach: parseFloat(inputData.thalach),
+                    exang: parseInt(inputData.exang),
+                    oldpeak: parseFloat(inputData.oldpeak),
+                    slope: parseInt(inputData.slope),
+                    ca: parseInt(inputData.ca),
+                    thal: parseInt(inputData.thal)
+                })
             });
-
-            const data = await response.json();
-            console.log("Backend Response:", data);  // Debugging
-
-            if (data.error) {
-                alert(`Error: ${data.error}`);
-                setPredictionResult(null); // Reset prediction
-            } else if (data.status === 'success') {
-                setPredictionResult(data.prediction);
+    
+            const result = await response.json();
+            if (result.status === 'success') {
+                setPredictionResult({
+                    prediction: result.prediction === 1 ? 'Heart Disease Detected' : 'No Heart Disease',
+                    probability: (result.probability * 100).toFixed(2) + '%'
+                });
             } else {
-                alert("Unexpected response from server.");
-                setPredictionResult(null);
+                setPredictionResult({ error: result.message });
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('Failed to predict heart disease');
+            setPredictionResult({ error: 'An error occurred while making the prediction.' });
         }
     };
 
+    const labels = {
+        age: "Age",
+        sex: "Sex",
+        cp: "Chest Pain Type",
+        trestbps: "Resting Blood Pressure",
+        chol: "Serum Cholesterol",
+        fbs: "Fasting Blood Sugar",
+        restecg: "Resting Electrocardiographic Results",
+        thalach: "Maximum Heart Rate Achieved",
+        exang: "Exercise Induced Angina",
+        oldpeak: "ST Depression Induced by Exercise",
+        slope: "Slope of the Peak Exercise ST Segment",
+        ca: "Number of Major Vessels Colored by Fluoroscopy",
+        thal: "Thalassemia"
+    };
+
     return (
-        <div className='HeartDiseasePrediction'>
-            <div className="heart-header">
+        <div className="HeartDiseasePrediction">
+            <div className="header">
                 <div className="logo">ModelHQ</div>
-                <FaAtlas className="Atlas-icon" onClick={() => setIsSidebarOpen(true)} />
+                <FaAtlas className="book-icon" onClick={() => setIsSidebarOpen(true)} />
+            </div>
+            <div className="HeartDiseasePrediction-hero">
+                <h1>Heart Disease <span>Prediction <br /> Model</span></h1>
+                <p>Our advanced AI model evaluates key health indicators to assess 
+                your heart disease risk with high accuracy.</p>
             </div>
             <div className="heart-detection">
-                <h1>Heart Disease Prediction</h1>
-                <div className="input-fields">
+                <div className="notice">
+                    <h3>Enter health parameters</h3>
+                    <p>Enter correct data to get accurate result</p>
+                </div>
+                <div className="input-container">
                     {Object.keys(inputData).map((key) => (
-                        <input
-                            key={key}
-                            type="number"
-                            name={key}
-                            value={inputData[key]}
-                            onChange={handleInputChange}
-                            placeholder={key.replace(/_/g, ' ')}
-                        />
+                        <div className="input-group" key={key}>
+                            <label htmlFor={key}>{labels[key]}</label>
+                            <input
+                                type="text"
+                                id={key}
+                                name={key}
+                                placeholder={`Enter ${key}`}
+                                value={inputData[key]}
+                                onChange={handleInputChange}
+                            />
+                        </div>
                     ))}
                 </div>
-                <button className="predict-button" onClick={handleHeartDiseasePrediction}>Predict</button>
-                {predictionResult !== null && (
+                <button className="predict-button" onClick={handleHeartDiseasePrediction}>
+                    Predict
+                </button>
+                {predictionResult && (
                     <div className="prediction-result">
-                        <h2>Prediction Result:</h2>
-                        <p>{predictionResult === 0 ? 'The person does not have heart disease' : 'The person has heart disease'}</p>
+                        {predictionResult.error ? (
+                            <p className="error">{predictionResult.error}</p>
+                        ) : (
+                            <>
+                                <p className="result">Prediction: {predictionResult.prediction}</p>
+                                <p className="probability">Probability: {predictionResult.probability}</p>
+                            </>
+                        )}
                     </div>
                 )}
             </div>
-
             <div className={`sidebar-model-details ${isSidebarOpen ? 'open' : ''}`}>
                 <FaTimes className="close-icon" onClick={() => setIsSidebarOpen(false)} />
                 <div className="model-details-container">

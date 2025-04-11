@@ -1,16 +1,15 @@
 import React from 'react';
 import './Models.css';
-import { FaSearch , FaTrash, FaChartLine, FaBolt} from 'react-icons/fa';
+import { FaSearch, FaTrash, FaChartLine, FaBolt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const Models = () => {
-
     const navigate = useNavigate();
 
     return (
         <div className='Models'>
             <div className="Models-hero">
-                <h1>Explore Powerful <span>Prediction<br/>Models</span></h1>
+                <h1>Explore Powerful <span>Prediction<br />Models</span></h1>
                 <h3>Discover and interact with state-of-the-art machine 
                     learning models. Find the perfect model for your 
                     use case with our comprehensive collection.
@@ -22,7 +21,7 @@ const Models = () => {
                         <FaSearch className="search-icon" />
                         <input type="text" placeholder="Search Model" className="search-input" />
                     </div>
-                    
+
                     <div className="dropdowns">
                         <select className="dropdown">
                             <option>Category</option>
@@ -188,7 +187,45 @@ const Models = () => {
                             <hr />
                             <button className='TryNow stock' onClick={() => navigate('/BreastCancer')}>Try Now</button>
                         </li>
-                        
+                        <li>
+                            <div className="Marketing">
+                                <p>Featured</p>
+                            </div>
+                            <div className="Model-heading">
+                                <h2>Sales Prediction Model</h2>
+                                <div className="Model-accuracy">
+                                    <FaBolt className="bolt-icon" style={{ color: '#007EA7' }} />
+                                    <h4 style={{ fontWeight: 500 }}>95%</h4>
+                                </div>
+                            </div>
+                            <p className='Model-subheading'>AI-powered model predicting weekly sales for retail stores using historical data.</p>
+                            <div className="Model-tags">
+                                <li>Retail</li>
+                                <li>Regression</li>
+                                <li>Time-series</li>
+                            </div>
+                            <hr />
+                            <button className='TryNow stock' onClick={() => navigate('/sales_prediction')}>Try Now</button>
+                        </li>
+                        <li>
+                            <div className="Marketing">
+                                <p>Featured</p>
+                            </div>
+                            <div className="Model-heading">
+                                <h2>Car Price Prediction</h2>
+                                <div className="Model-accuracy">
+                                    <FaBolt className="bolt-icon" style={{ color: '#007EA7' }} />
+                                    <h4 style={{ fontWeight: 500 }}>90%</h4>
+                                </div>
+                            </div>
+                            <p className='Model-subheading'>AI-powered model predicting car prices based on features like mileage, year, and condition.</p>
+                            <div className="Model-tags">
+                                <li>Automotive</li>
+                                <li>Regression</li>
+                            </div>
+                            <hr />
+                            <button className='TryNow stock' onClick={() => navigate('/car_price_prediction')}>Try Now</button>
+                        </li>
                     </ul>
                 </div>
             </div>
