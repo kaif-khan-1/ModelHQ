@@ -36,6 +36,9 @@ const Navbar = () => {
     if (location.pathname === '/bank_churn') {
         return null;
     }
+    if (location.pathname === '/employee_attrition') {
+        return null;
+    }
 
     return (
         <div className='Navbar'>

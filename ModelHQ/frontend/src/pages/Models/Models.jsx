@@ -226,6 +226,25 @@ const Models = () => {
                             <hr />
                             <button className='TryNow stock' onClick={() => navigate('/bank_churn')}>Try Now</button>
                         </li>
+                        <li>
+                            <div className="Marketing">
+                                <p>Featured</p>
+                            </div>
+                            <div className="Model-heading">
+                                <h2>Employee Attrition Prediction</h2>
+                                <div className="Model-accuracy">
+                                    <FaBolt className="bolt-icon" style={{ color: '#007EA7' }} />
+                                    <h4 style={{ fontWeight: 500 }}>93%</h4>
+                                </div>
+                            </div>
+                            <p className='Model-subheading'>AI-powered model predicting employee attrition based on workplace and demographic data.</p>
+                            <div className="Model-tags">
+                                <li>HR</li>
+                                <li>Classification</li>
+                            </div>
+                            <hr />
+                            <button className='TryNow stock' onClick={() => navigate('/employee_attrition')}>Try Now</button>
+                        </li>
                     </ul>
                 </div>
             </div>

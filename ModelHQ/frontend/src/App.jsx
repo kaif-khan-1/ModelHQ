@@ -13,6 +13,7 @@ import BreastCancer from "./pages/Breast Cancer/BreastCancer";
 import SalesPrediction from './pages/sales prediction/salesPrediction';
 import CarPricePrediction from './pages/Car Price Prediction/CarPricePrediction'
 import BankChurnPrediction from "./pages/BankChern/BankChernPrediction";
+import EmployeeAttritionPrediction from "./pages/Employeeattrition/EmployeeAttritionPrediction";
 
 const App = () => {
 
@@ -33,6 +34,7 @@ const App = () => {
         <Route path='/sales_prediction' element={<SalesPrediction />} />
         <Route path='/car_price_prediction' element={<CarPricePrediction />} />
         <Route path='/bank_churn' element={<BankChurnPrediction />} />
+        <Route path='/employee_attrition' element={<EmployeeAttritionPrediction />} />
       </Routes>
     </Router>
   );

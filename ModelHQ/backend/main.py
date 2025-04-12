@@ -281,6 +281,49 @@ def predict_car_price(data: dict):
             "status": "error",
             "message": str(e)
         }
+    
+@app.post("/predict/employee_attrition")
+def predict_employee_attrition(data: dict):
+    try:
+        # Load the trained model
+        with open('./models/Employee/employee_attrition_model.pkl', 'rb') as f:
+            model = pickle.load(f)
+
+        # Load the scaler
+        scaler = joblib.load('./models/Employee/scaler.pkl')
+
+        # Load reference columns from training (X_train.columns saved during preprocessing)
+        reference_cols = joblib.load('./models/Employee/reference_columns.pkl')
+
+        # Convert input data to a DataFrame
+        input_df = pd.DataFrame([data])
+
+        # Add missing columns with 0
+        for col in reference_cols:
+            if col not in input_df.columns:
+                input_df[col] = 0
+
+        # Reorder columns to match training order
+        input_df = input_df[reference_cols]
+
+        # Scale numerical features
+        input_df = scaler.transform(input_df)
+
+        # Make prediction
+        prediction = model.predict(input_df)[0]
+        probability = model.predict_proba(input_df)[0][1]
+
+        return {
+            "status": "success",
+            "prediction": int(prediction),  # 1: Attrition, 0: No Attrition
+            "probability": float(probability)
+        }
+
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
