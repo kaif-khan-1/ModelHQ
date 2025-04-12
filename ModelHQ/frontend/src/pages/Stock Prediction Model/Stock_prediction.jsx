@@ -4,24 +4,16 @@ import { FaAtlas, FaTimes } from 'react-icons/fa';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-
 const Stock_prediction = () => {
     const [selectedStock, setSelectedStock] = useState('');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('overview');
     const [predictions, setPredictions] = useState([]);
-    const [openSection, setOpenSection] = useState(null);
-
-    const toggleSection = (section) => {
-        setOpenSection(openSection === section ? null : section);
-    };
-
+    const [isLoading, setIsLoading] = useState(false);
 
     const stockOptions = [
-        'AAPL - Apple', 'TSLA - Tesla', 'GOOGL - Alphabet', 'AMZN - Amazon', 'MSFT - Microsoft',
-        'NFLX - Netflix', 'NVDA - NVIDIA', 'META - Meta', 'BRK.A - Berkshire Hathaway', 'V - Visa',
-        'JPM - JPMorgan Chase', 'WMT - Walmart', 'PG - Procter & Gamble', 'DIS - Disney', 'INTC - Intel',
-        'KO - Coca-Cola', 'PEP - PepsiCo', 'ADBE - Adobe', 'CSCO - Cisco', 'PYPL - PayPal'
+        'AAPL', 'AMZN', 'BRK-B', 'DIS', 'GOOG', 'HD', 'JNJ', 'JPM', 'MA', 'META',
+        'MSFT', 'NFLX', 'NVDA', 'PEP', 'PG', 'PYPL', 'TSLA', 'UNH', 'V', 'VZ'
     ];
 
     const handleSearch = async () => {
@@ -29,21 +21,21 @@ const Stock_prediction = () => {
             alert('Please select a stock.');
             return;
         }
-    
+
         setIsLoading(true);
-        
+
         try {
             const response = await fetch('http://localhost:8000/predict/stock', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    stock_symbol: "GOOG",  // Always use GOOG for prediction
+                body: JSON.stringify({
+                    stock_symbol: selectedStock,
                     days: 10
                 })
             });
-            
+
             const data = await response.json();
-            
+
             if (data.status === 'success') {
                 setPredictions(data.predictions);
             } else {
@@ -56,8 +48,6 @@ const Stock_prediction = () => {
             setIsLoading(false);
         }
     };
-    
-    
 
     return (
         <div className='Stock_prediction'>
@@ -67,9 +57,9 @@ const Stock_prediction = () => {
             </div>
             <div className="stock-search">
                 <h1>Search Stock</h1>
-                <select 
-                    value={selectedStock} 
-                    onChange={(e) => setSelectedStock(e.target.value)} 
+                <select
+                    value={selectedStock}
+                    onChange={(e) => setSelectedStock(e.target.value)}
                     className="stock-dropdown"
                 >
                     <option value="" disabled>Select a Stock</option>
@@ -77,7 +67,9 @@ const Stock_prediction = () => {
                         <option key={index} value={stock}>{stock}</option>
                     ))}
                 </select>
-                <button className="search-button" onClick={handleSearch}>Search</button>
+                <button className="search-button" onClick={handleSearch} disabled={isLoading}>
+                    {isLoading ? 'Loading...' : 'Search'}
+                </button>
                 <div className="predictions">
                     <h2>Predicted Prices for {selectedStock || 'Selected Stock'}</h2>
                     {predictions.length > 0 ? (
@@ -85,11 +77,6 @@ const Stock_prediction = () => {
                             {predictions.map((price, index) => (
                                 <li key={index}>
                                     Day {index + 1}: ${price.toFixed(2)}
-                                    {index > 0 && (
-                                        <span className={price > predictions[index-1] ? 'up' : 'down'}>
-                                            {price > predictions[index-1] ? '↑' : '↓'}
-                                        </span>
-                                    )}
                                 </li>
                             ))}
                         </ul>

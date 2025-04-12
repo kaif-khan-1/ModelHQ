@@ -171,3 +171,155 @@ body {
     font-size: 30px;
     cursor: pointer;
 }
+
+/* Car Price Prediction Implementation CSS */
+.model-details-implementation {
+    padding: 2% 5%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+}
+
+.model-details-implementation h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    text-align: center;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+.model-details-implementation p {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.implementation-phase {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #3498db;
+}
+
+.implementation-phase h2 {
+    font-size: 1.5rem;
+    color: #3498db;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.code-block {
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.code-explanation {
+    background-color: #f8f9fa;
+    padding: 1.2rem;
+    border-left: 4px solid #2ecc71;
+}
+
+.code-explanation p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #34495e;
+    margin: 0.8rem 0;
+    text-align: left;
+}
+
+.code-explanation p strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.code-explanation p em {
+    font-style: italic;
+    color: #7f8c8d;
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+}
+
+/* Phase-specific styling */
+.implementation-phase:nth-child(1) {
+    border-left-color: #3498db;
+}
+.implementation-phase:nth-child(2) {
+    border-left-color: #e74c3c;
+}
+.implementation-phase:nth-child(3) {
+    border-left-color: #f39c12;
+}
+.implementation-phase:nth-child(4) {
+    border-left-color: #2ecc71;
+}
+.implementation-phase:nth-child(5) {
+    border-left-color: #9b59b6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .model-details-implementation {
+        padding: 1rem;
+    }
+    
+    .implementation-phase {
+        padding: 1rem;
+    }
+    
+    .model-details-implementation h1 {
+        font-size: 1.8rem;
+    }
+    
+    .implementation-phase h2 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Animation for better UX */
+.code-block {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.code-block:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Numbering for phases */
+.implementation-phase {
+    position: relative;
+    padding-left: 3.5rem;
+}
+
+.implementation-phase::before {
+    content: attr(data-phase);
+    position: absolute;
+    left: 1rem;
+    top: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    background-color: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Different colors for each phase number */
+.implementation-phase:nth-child(1)::before { background-color: #3498db; }
+.implementation-phase:nth-child(2)::before { background-color: #e74c3c; }
+.implementation-phase:nth-child(3)::before { background-color: #f39c12; }
+.implementation-phase:nth-child(4)::before { background-color: #2ecc71; }
+.implementation-phase:nth-child(5)::before { background-color: #9b59b6; }

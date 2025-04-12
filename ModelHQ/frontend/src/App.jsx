@@ -12,28 +12,10 @@ import Diabetes_prediction from './pages/Diabetes_prediction/diabetes_prediction
 import BreastCancer from "./pages/Breast Cancer/BreastCancer";
 import SalesPrediction from './pages/sales prediction/salesPrediction';
 import CarPricePrediction from './pages/Car Price Prediction/CarPricePrediction'
-import Lenis from "@studio-freight/lenis";
+
 
 const App = () => {
-  useEffect(() => {
-    const lenis = new Lenis({
-      smooth: true,
-      lerp: 0.05,
-      infinite: false,
-      speed: 0.5,
-    });
 
-    const raf = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
 
   return (
     <Router>

@@ -3,7 +3,7 @@ import './BreastCancer.css';
 import { FaUpload, FaSpinner, FaDiagnoses, FaTimes, FaAtlas } from 'react-icons/fa';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
-
+import './../common.css'
 
 const BreastCancer = () => {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -121,49 +121,81 @@ const BreastCancer = () => {
                     </div>
 
                     <div className="model-details-content">
-                        {activeSection === 'overview' && 
-                            <div className="model-details-overview">
-                                <h1>Model Architecture</h1>
-                                <p>High-level overview of our classification system</p>
-                                <div className="overview-cards">
+                    {activeSection === 'overview' && 
+                        <div className="model-details-overview">
+                            <h1>Model Overview</h1>
+                            <p>
+                                Our Breast Cancer Classification Model is a state-of-the-art deep learning system designed to assist medical professionals in diagnosing breast cancer. It analyzes histopathology images to classify them as benign or malignant with high accuracy.
+                            </p>
+                            
+                            <h2 className='workflow'>Workflow</h2>
+                            <div className="overview-cards">
+                                <li>
+                                    <div className="circle">1</div>
+                                    <h3>Data Collection & Preprocessing</h3>
+                                    <p>Gathering histopathology images, applying augmentation, and normalizing data for training.</p>
+                                </li>
+                                <li>
+                                    <div className="circle">2</div>
+                                    <h3>Model Architecture & Training</h3>
+                                    <p>Using a CNN-based architecture optimized for image classification tasks.</p>
+                                </li>
+                                <li>
+                                    <div className="circle">3</div>
+                                    <h3>Prediction & Evaluation</h3>
+                                    <p>Classifying images with accuracy metrics and confidence scores.</p>
+                                </li>
+                            </div>
+
+                            <h2 className='keycomponenets'>Key Components</h2>
+                            <div className="DataSource">
+                                <h3>Data Source</h3>
+                                <ul>
                                     <li>
-                                        <div className="circle">1</div>
-                                        <h3>Data Collection & Preprocessing</h3>
-                                        <p>Gathering and preprocessing histopathology images.</p>
+                                        <a href="https://www.kaggle.com/datasets/ambarish/breakhis" target="_blank" rel="noopener noreferrer">
+                                            Histopathology Images Dataset (Kaggle)
+                                        </a>
                                     </li>
-                                    <li>
-                                        <div className="circle">2</div>
-                                        <h3>Model Architecture & Training</h3>
-                                        <p>CNN-based deep learning for image classification.</p>
-                                    </li>
-                                    <li>
-                                        <div className="circle">3</div>
-                                        <h3>Prediction & Evaluation</h3>
-                                        <p>Image classification with accuracy metrics.</p>
-                                    </li>
-                                </div>
-                                <h1>Key Components</h1>
-                                <div className="DataSource">
-                                    <h3>Data source</h3>
-                                    <ul>
-                                        <li>Histopathology images – Collected from medical institutions</li>
-                                        <li>Image augmentation – Rotation, flipping, brightness adjustment</li>
-                                        <li>Normalization – Standardizing image sizes and color channels</li>
-                                        <li>Class balancing – Handling imbalanced datasets</li>
-                                    </ul>
-                                </div>
-                                <hr />
-                                <div className="ModelUsed">
-                                    <h3>Machine Learning Models</h3>
-                                    <ul>
-                                        <li>Convolutional Neural Network (CNN) – Specialized for image analysis.</li>
-                                    </ul>
-                                </div>
-                                <div className="ApproachUsed">
-                                    <h3>Medical Imaging Approach</h3>
-                                    <p>Our system leverages a CNN-based model, optimized for histopathology images. It analyzes cellular structures and patterns to differentiate between benign and malignant tissue with high accuracy.</p>
-                                </div>
-                            </div>}
+                                    <li>Image augmentation – Rotation, flipping, brightness adjustment</li>
+                                    <li>Normalization – Standardizing image sizes and color channels</li>
+                                    <li>Class balancing – Handling imbalanced datasets</li>
+                                </ul>
+                            </div>
+
+                            <hr />
+
+                            <div className="ModelUsed">
+                                <h3>Machine Learning Models</h3>
+                                <ul>
+                                    <li>Convolutional Neural Network (CNN) – Specialized for image analysis.</li>
+                                </ul>
+                            </div>
+
+                            <div className="ApproachUsed">
+                                <h3>Medical Imaging Approach</h3>
+                                <p>
+                                    Our system leverages a CNN-based model, optimized for histopathology images. It analyzes cellular structures and patterns to differentiate between benign and malignant tissue with high accuracy.
+                                </p>
+                            </div>
+
+                            <div className="download-buttons">
+                                <a
+                                    href="/path/to/notebook.ipynb"
+                                    download="BreastCancer_Notebook.ipynb"
+                                    className="download-button"
+                                >
+                                    Download Python Notebook
+                                </a>
+                                <a
+                                    href="/path/to/model.h5"
+                                    download="BreastCancer_Model.h5"
+                                    className="download-button"
+                                >
+                                    Download .h5 Model
+                                </a>
+                            </div>
+                        </div>
+                    }
                         {activeSection === 'implementation' && 
                             <div className="model-details-implementation">
                                 <h1>Model Implementation</h1>

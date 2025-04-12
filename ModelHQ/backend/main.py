@@ -11,6 +11,7 @@ import os
 import xgboost as xgb
 import joblib  # For loading the scaler
 import pandas as pd
+import cv2
 
 app = FastAPI()
 
@@ -78,49 +79,55 @@ async def predict_breast_cancer(file: UploadFile = File(...)):
 @app.post("/predict/stock")
 def predict_stock(data: StockInput):
     try:
-        # Use GOOG.h5 model regardless of selected stock (for demo purposes)
-        model_path = "./models/GOOG.h5"
-        
+        # Extract stock symbol and days from the input
+        stock_symbol = data.stock_symbol
+        days = data.days
+
+        # Construct the model path dynamically
+        model_path = f"./models/stock prediction/{stock_symbol}.h5"
+
+        # Check if the model file exists
         if not os.path.exists(model_path):
             return {
                 "status": "error",
-                "message": "GOOG prediction model not found"
+                "message": f"Model for {stock_symbol} not found."
             }
-        
+
+        # Load the model
         model = tf.keras.models.load_model(model_path)
-        
-        # Get recent data for GOOG (since model was trained on GOOG data)
+
+        # Fetch stock data using yfinance
         end_date = datetime.now().strftime('%Y-%m-%d')
         start_date = (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d')
-        stock_data = yf.download("GOOG", start=start_date, end=end_date)
-        
+        stock_data = yf.download(stock_symbol, start=start_date, end=end_date)
+
         if stock_data.empty or len(stock_data) < 100:
             return {
                 "status": "error",
-                "message": "Insufficient historical data for GOOG"
+                "message": f"Insufficient historical data for {stock_symbol}."
             }
-        
+
         # Preprocess data
-        scaler = MinMaxScaler(feature_range=(0,1))
+        scaler = MinMaxScaler(feature_range=(0, 1))
         scaled_data = scaler.fit_transform(stock_data[['Close']])
         last_100_days = scaled_data[-100:].reshape(1, 100, 1)
-        
+
         # Generate predictions
         predicted_prices = []
         current_sequence = last_100_days.copy()
-        
-        for _ in range(data.days):
+
+        for _ in range(days):
             pred = model.predict(current_sequence, verbose=0)[0][0]
             actual_price = float(scaler.inverse_transform([[pred]])[0][0])
             predicted_prices.append(actual_price)
-            current_sequence = np.append(current_sequence[:,1:,:], [[[pred]]], axis=1)
-        
+            current_sequence = np.append(current_sequence[:, 1:, :], [[[pred]]], axis=1)
+
         return {
             "status": "success",
-            "stock": "GOOG",  # Always return GOOG as the predicted stock
+            "stock": stock_symbol,
             "predictions": predicted_prices
         }
-        
+
     except Exception as e:
         return {
             "status": "error",

@@ -113,11 +113,89 @@ const CarPricePrediction = () => {
                                 <h1>Model Overview</h1>
                                 <p>High-level overview of our car price prediction system</p>
                             </div>}
-                        {activeSection === 'implementation' && 
-                            <div className="model-details-implementation">
-                                <h1>Model Implementation</h1>
-                                <p>Details about the implementation of the car price prediction model</p>
-                            </div>}
+                            {activeSection === 'implementation' && 
+                                <div className="model-details-implementation">
+                                    <h1>Car Price Prediction Implementation</h1>
+                                    <p>Detailed technical breakdown of our machine learning pipeline</p>
+                                    
+                                    <div className="implementation-phase">
+                                        <h2>1. Data Loading & Cleaning</h2>
+                                        <div className="code-block">
+                                            <SyntaxHighlighter language="python" style={dracula}>
+                            {`# Load and clean the dataset
+                            df = pd.read_csv('/content/extracted_files/USA_cars_datasets.csv')
+                            df = df.drop(['Unnamed: 0', 'vin', 'lot'], axis=1)
+                            df['price'] = df['price'].replace('[\$,]', '', regex=True).astype(float)`}
+                                            </SyntaxHighlighter>
+                                            <div className="code-explanation">
+                                                <p><strong>Line 1:</strong> Loads the raw car dataset from CSV</p>
+                                                <p><strong>Line 2:</strong> Drops unnecessary columns</p>
+                                                <p><strong>Line 3:</strong> Cleans price format (removes $ and commas)</p>
+                                                <p><em>Data Quality:</em> Proper cleaning ensures accurate modeling</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="implementation-phase">
+                                        <h2>2. Feature Engineering</h2>
+                                        <div className="code-block">
+                                            <SyntaxHighlighter language="python" style={dracula}>
+                            {`# Create new features
+                            current_year = pd.Timestamp.now().year
+                            df['age'] = current_year - df['year']
+                            df['mileage'] = pd.to_numeric(df['mileage'], errors='coerce')`}
+                                            </SyntaxHighlighter>
+                                            <div className="code-explanation">
+                                                <p><strong>Line 1-2:</strong> Calculates vehicle age from current year</p>
+                                                <p><strong>Line 3:</strong> Ensures mileage is numeric</p>
+                                                <p><em>ML Insight:</em> Age is often more predictive than manufacture year</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="implementation-phase">
+                                        <h2>3. Data Preprocessing Pipeline</h2>
+                                        <div className="code-block">
+                                            <SyntaxHighlighter language="python" style={dracula}>
+                            {`# Numeric feature pipeline
+                            numeric_transformer = Pipeline(steps=[
+                                ('imputer', SimpleImputer(strategy='median')),
+                                ('scaler', StandardScaler())])
+
+                            # Categorical feature pipeline
+                            categorical_transformer = Pipeline(steps=[
+                                ('imputer', SimpleImputer(strategy='constant', fill_value='missing')),
+                                ('onehot', OneHotEncoder(handle_unknown='ignore'))])`}
+                                            </SyntaxHighlighter>
+                                            <div className="code-explanation">
+                                                <p><strong>Line 1-3:</strong> Handles missing numeric values and scales them</p>
+                                                <p><strong>Line 6-8:</strong> Processes categorical data with one-hot encoding</p>
+                                                <p><em>Best Practice:</em> Pipelines ensure consistent preprocessing</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="implementation-phase">
+                                        <h2>4. Model Training</h2>
+                                        <div className="code-block">
+                                            <SyntaxHighlighter language="python" style={dracula}>
+                            {`# Complete modeling pipeline
+                            lr_model = Pipeline(steps=[
+                                ('preprocessor', preprocessor),
+                                ('regressor', LinearRegression())])
+
+                            # Train the model
+                            lr_model.fit(X_train, y_train)`}
+                                            </SyntaxHighlighter>
+                                            <div className="code-explanation">
+                                                <p><strong>Line 1-3:</strong> Combines preprocessing and linear regression</p>
+                                                <p><strong>Line 6:</strong> Trains the model on prepared data</p>
+                                                <p><em>ML Concept:</em> End-to-end pipelines prevent data leakage</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         {activeSection === 'evaluation' && 
                             <div className="model-details-evaluation">
                                 <h1>Model Evaluation</h1>
