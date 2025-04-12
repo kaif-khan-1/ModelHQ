@@ -33,6 +33,9 @@ const Navbar = () => {
     if (location.pathname === '/car_price_prediction') {
         return null;
     }
+    if (location.pathname === '/bank_churn') {
+        return null;
+    }
 
     return (
         <div className='Navbar'>

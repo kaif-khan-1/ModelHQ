@@ -46,6 +46,25 @@ const Models = () => {
                     <ul className="Model-list">
                         <li>
                             <div className="Marketing">
+                                <p>Featured</p>
+                            </div>
+                            <div className="Model-heading">
+                                <h2>Breast Cancer Prediction</h2>
+                                <div className="Model-accuracy">
+                                    <FaBolt className="bolt-icon" style={{color: '#007EA7'}}/>
+                                    <h4 style={{fontWeight: 500}}>98%</h4>
+                                </div>
+                            </div>
+                            <p className='Model-subheading'>AI Powered Breast Cancer classifier using CNN</p>
+                            <div className="Model-tags">
+                                <li>Healthcare</li>
+                                <li>CNN</li>
+                            </div>
+                            <hr />
+                            <button className='TryNow stock' onClick={() => navigate('/BreastCancer')}>Try Now</button>
+                        </li>
+                        <li>
+                            <div className="Marketing">
                                 <p>Trending</p>
                             </div>
                             <div className="Model-heading">
@@ -65,43 +84,22 @@ const Models = () => {
                         </li>
                         <li>
                             <div className="Marketing">
-                                <p>Trending</p>
+                                <p>Featured</p>
                             </div>
                             <div className="Model-heading">
-                                <h2>Spam Detection <br />Model</h2>
+                                <h2>Car Price Prediction</h2>
                                 <div className="Model-accuracy">
-                                    <FaBolt className="bolt-icon" style={{color: '#007EA7'}}/>
-                                    <h4 style={{fontWeight: 500}}>98%</h4>
+                                    <FaBolt className="bolt-icon" style={{ color: '#007EA7' }} />
+                                    <h4 style={{ fontWeight: 500 }}>90%</h4>
                                 </div>
                             </div>
-                            <p className='Model-subheading'>AI-powered spam detection using historical data</p>
+                            <p className='Model-subheading'>AI-powered model predicting car prices based on features like mileage, year, and condition.</p>
                             <div className="Model-tags">
-                                <li>Spam</li>
-                                <li>NLP</li>
-                                <li>Classification</li>
+                                <li>Automotive</li>
+                                <li>Regression</li>
                             </div>
                             <hr />
-                            <button className='TryNow stock' onClick={() => navigate('/spam')}>Try Now</button>
-                        </li>
-                        <li>
-                            <div className="Marketing">
-                                <p>Trending</p>
-                            </div>
-                            <div className="Model-heading">
-                                <h2>Movie Recommendation</h2>
-                                <div className="Model-accuracy">
-                                    <FaBolt className="bolt-icon" style={{color: '#007EA7'}}/>
-                                    <h4 style={{fontWeight: 500}}>98%</h4>
-                                </div>
-                                </div>
-                                    <p className='Model-subheading'>Predict a movie's box office revenue based on key factors.</p>
-                                    <div className="Model-tags">
-                                        <li>Entertainment</li>
-                                        <li>Regression</li>
-                                </div>
-                            <hr />
-                            <button className='TryNow stock' onClick={() => navigate('/movie')}>Try Now</button>
-
+                            <button className='TryNow stock' onClick={() => navigate('/car_price_prediction')}>Try Now</button>
                         </li>
                     </ul>
                 </div>
@@ -168,25 +166,7 @@ const Models = () => {
                             <hr />
                             <button className='TryNow stock' onClick={() => navigate('/diabetes')}>Try Now</button>
                         </li>
-                        <li>
-                            <div className="Marketing">
-                                <p>Featured</p>
-                            </div>
-                            <div className="Model-heading">
-                                <h2>Breast Cancer Prediction</h2>
-                                <div className="Model-accuracy">
-                                    <FaBolt className="bolt-icon" style={{color: '#007EA7'}}/>
-                                    <h4 style={{fontWeight: 500}}>98%</h4>
-                                </div>
-                            </div>
-                            <p className='Model-subheading'>AI Powered Breast Cancer classifier using CNN</p>
-                            <div className="Model-tags">
-                                <li>Healthcare</li>
-                                <li>CNN</li>
-                            </div>
-                            <hr />
-                            <button className='TryNow stock' onClick={() => navigate('/BreastCancer')}>Try Now</button>
-                        </li>
+                        
                         <li>
                             <div className="Marketing">
                                 <p>Featured</p>
@@ -209,22 +189,42 @@ const Models = () => {
                         </li>
                         <li>
                             <div className="Marketing">
+                                <p>Trending</p>
+                            </div>
+                            <div className="Model-heading">
+                                <h2>Spam Detection <br />Model</h2>
+                                <div className="Model-accuracy">
+                                    <FaBolt className="bolt-icon" style={{color: '#007EA7'}}/>
+                                    <h4 style={{fontWeight: 500}}>98%</h4>
+                                </div>
+                            </div>
+                            <p className='Model-subheading'>AI-powered spam detection using historical data</p>
+                            <div className="Model-tags">
+                                <li>Spam</li>
+                                <li>NLP</li>
+                                <li>Classification</li>
+                            </div>
+                            <hr />
+                            <button className='TryNow stock' onClick={() => navigate('/spam')}>Try Now</button>
+                        </li>
+                        <li>
+                            <div className="Marketing">
                                 <p>Featured</p>
                             </div>
                             <div className="Model-heading">
-                                <h2>Car Price Prediction</h2>
+                                <h2>Bank Churn Prediction</h2>
                                 <div className="Model-accuracy">
                                     <FaBolt className="bolt-icon" style={{ color: '#007EA7' }} />
-                                    <h4 style={{ fontWeight: 500 }}>90%</h4>
+                                    <h4 style={{ fontWeight: 500 }}>94%</h4>
                                 </div>
                             </div>
-                            <p className='Model-subheading'>AI-powered model predicting car prices based on features like mileage, year, and condition.</p>
+                            <p className='Model-subheading'>AI-powered model predicting customer churn based on financial and demographic data.</p>
                             <div className="Model-tags">
-                                <li>Automotive</li>
-                                <li>Regression</li>
+                                <li>Finance</li>
+                                <li>Classification</li>
                             </div>
                             <hr />
-                            <button className='TryNow stock' onClick={() => navigate('/car_price_prediction')}>Try Now</button>
+                            <button className='TryNow stock' onClick={() => navigate('/bank_churn')}>Try Now</button>
                         </li>
                     </ul>
                 </div>

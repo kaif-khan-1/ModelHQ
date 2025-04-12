@@ -12,6 +12,7 @@ import xgboost as xgb
 import joblib  # For loading the scaler
 import pandas as pd
 import cv2
+import pickle
 
 app = FastAPI()
 
@@ -126,6 +127,39 @@ def predict_stock(data: StockInput):
             "status": "success",
             "stock": stock_symbol,
             "predictions": predicted_prices
+        }
+
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
+
+@app.post("/predict/bank_churn")
+def predict_bank_churn(data: dict):
+    try:
+        # Load the trained model
+        with open('./models/Bank Churn/bank_churn_model.pkl', 'rb') as f:
+            model = pickle.load(f)
+
+        # Load the scaler
+        scaler = joblib.load('./models/Bank Churn/scaler.pkl')
+
+        # Convert input data to a DataFrame
+        input_df = pd.DataFrame([data])
+
+        # Scale numerical features
+        numerical_features = ['CreditScore', 'Age', 'Tenure', 'Balance', 'NumOfProducts', 'EstimatedSalary']
+        input_df[numerical_features] = scaler.transform(input_df[numerical_features])
+
+        # Make prediction
+        prediction = model.predict(input_df)[0]
+        probability = model.predict_proba(input_df)[0][1]
+
+        return {
+            "status": "success",
+            "prediction": int(prediction),  # 1: Churn, 0: No Churn
+            "probability": float(probability)
         }
 
     except Exception as e:
